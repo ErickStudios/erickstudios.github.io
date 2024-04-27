@@ -1,0 +1,16 @@
+section {
+    padding: 20px;
+    background-color: #2f2f2f;
+    border-radius: 8px;
+    color: #fff; /* Asegurarse que el texto sea visible sobre fondo oscuro */
+}
+
+footer {
+    background-color: #222;
+    color: #fff;
+    text-align: center;
+    padding: 10px 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
