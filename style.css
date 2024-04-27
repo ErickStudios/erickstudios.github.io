@@ -2,13 +2,13 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
-    color: #333;
+    background-color: #292929;
+    color: #fff;
 }
 
 header {
-    background-color: #222;
-    color: #fff;
+    background-color: #292929;
+    color: #ffffff;
     text-align: center;
     padding: 20px 0;
 }
@@ -19,13 +19,13 @@ header h1 {
 
 section {
     padding: 20px;
-    margin: 15px;
-    background-color: white;
+
+    background-color: #373737;
     border-radius: 8px;
 }
 
 footer {
-    background-color: #222;
+    background-color: #292929;
     color: #fff;
     text-align: center;
     padding: 10px 0;
