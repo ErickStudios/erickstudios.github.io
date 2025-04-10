@@ -1,0 +1,342 @@
+Rutime
+function
+Print
+(
+	_CHAR16* text
+)
+{
+	echo text()
+}
+externtype
+	Print
+var
+	EFI_NT_EMULATOR
+	=
+	0
+import
+	Menu
+;
+Rutime
+function
+Print
+(
+	_CHAR16* text
+)
+{
+	echo text()
+}
+externtype
+	Print
+var
+	EFI_NT_EMULATOR
+	=
+	0
+if
+(
+	@debug
+		==
+	0
+)
+{
+	var
+		SecureBoot
+		=
+		@ScratchVar("SecureBoot?")
+}
+if
+(
+	@debug
+		==
+	1
+)
+{
+	var
+		SecureBoot
+		=
+		0
+}
+function
+SecurityAlert
+(
+)
+{
+	echo a security warning has bee ocurred
+}
+if
+(
+	SecureBoot
+	==
+	0
+)
+{
+	ECHO "SecureBoot is disabled"
+}
+if
+(
+	SecureBoot
+	==
+	1
+)
+{
+	ECHO "SecureBoot is enable"
+}
+jump
+ .SMBIOS_MAINc
+jump
+.EFI_MAIN
+var
+	@cpu_mode
+	=
+	0
+if
+(
+	"Waton"
+	!=
+	"Waton"
+)
+{
+	ECHO "Illegal coppy"
+	__stop__
+}
+typedef
+	var
+@cpu_mode
+=
+0x32
+	.x32
+typedef
+	var
+@cpu_mode
+=
+ 0x64
+	.x64
+typedef
+	var
+@cpu_mode
+=
+ 0x64
+	.x64
+var
+@cpu_mode
+=
+0x128
+var
+	Resources
+	=
+	0x00000000001
+section
+.COLGATE_SMBIOS
+jump
+.COLGATE_SMBIOS
+section
+.RESOURCE_ADD
+.x64
+var
+	ResourceToCreate
+	+=
+	ResourceName
+var
+	ResourceToCreate
+	+=
+	ResourcePath
+var
+	Resources
+	+=
+	ResourceToCreate
+if
+(
+	Resources
+		>
+	0xFFFFFFFFFFFF
+)
+{
+	jump
+	.COLGATE_SMBIOS
+}
+var
+@cpu_mode
+=
+0x128
+popback
+section
+.SMSBIOS_MAIN
+var
+	Resources
+	=
+	0x00000000000
+popback
+Rutime
+function
+Print
+(
+	_CHAR16* text
+)
+{
+	echo text()
+}
+externtype
+	Print
+var
+	EFI_NT_EMULATOR
+	=
+	0
+var
+@cpu_mode
+=
+0x32
+section
+.EFI_MAIN
+var
+	GlobalImageHandle
+	=
+	0
+var
+	GlobalSystemTable
+	=
+	0
+jump
+.EFI_BOOT
+section
+.EFI_ERROR
+ECHO "an error been ocurred in the firmware and cannot start"
+if
+(
+	EFI_NT_EMULATOR
+		==
+	0
+)
+{
+	sendm uefi_warpper(SystemTable->Reset->ResetCold)
+}
+__stop__
+section
+.EFI_BOOT
+ECHO "Markarian VirtualUEFI by ErickCraftStudios"
+var
+	EFI_NT_EMULATOR
+	=
+	1
+if
+(
+	@debug
+		==
+	0
+)
+{
+	var
+		EFI_NT_EMULATOR
+		=
+		0
+	ECHO "Running in /004MK VUEFI (tw version)"
+}
+if
+(
+	EFI_NT_EMULATOR
+		==
+	1
+)
+{
+	ECHO "Running on MKEFI_NT_EMULATOR"
+}
+efi.var
+	SecBtValid
+	=
+	0
+if
+(
+	SecureBoot
+		==
+	0
+)
+{
+	efi.var
+		SecBtValid
+		=
+		1
+}
+if
+(
+	SecureBoot
+		==
+	1
+)
+{
+	efi.var
+		SecBtValid
+		=
+		1
+}
+if
+(
+	SecBtValid
+		==
+	0
+)
+{
+	ECHO "SecureBoot value is unsopported"
+	__stop__
+}
+echo "Boot From: "
+if
+(
+	EFI_NT_EMULATOR
+		==
+	1
+)
+{
+	var
+		BootFrom
+		=
+		ReadLine
+	ECHO "this is an efi emulator so i show a test from a efi program"
+	ECHO "hello world"
+	jump
+	.EFI_BOOT
+}
+if
+(
+	EFI_NT_EMULATOR
+		==
+	0
+)
+{
+	sendmw uefi_warpper(SystemTable->ConIn->ReadLine->BootFrom)
+	var
+		BootFrom
+		=
+		@ScratchVar("BootFrom")
+}
+if
+(
+	BootFrom
+		==
+	"Shell"
+)
+{
+	jump
+	.Shell
+}
+var
+	BootCommand
+	=
+	"SystemTable->Boot->BootDriver->"
+var
+	BootCommand
+	+=
+	BootFrom
+sendmw uefi_warpper(BootCommand)
+ECHO "0x0003 process finished"
+ECHO "Rebooting your PC..."
+jump
+.EFI_BOOT
+section
+.Shell
+	echo "/005mkVEFI> /002"
+	sendmw uefi_warpper(SystemTable->ConIn-ReadLine->BootFrom)
+	var
+		prompt
+		=
+		@ScratchVar("BootFrom")
+	sendmw uefi_command(prompt)
+	jump
+	.Shell
