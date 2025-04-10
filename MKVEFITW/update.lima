@@ -82,6 +82,106 @@ if
 }
 jump
 .EFI_MAIN
+@structure
+{
+	prototype
+	void
+	var
+ImageHandle
+=
+NULL
+	prototype
+	string
+	var
+		Vendor
+	prototype
+	int
+	var
+		Version
+	prototype
+	void
+	var
+		BS
+		prototype
+		int
+		var
+			BS->WatchDogTime
+		prototype
+		void
+		var
+			BS->Time
+			prototype
+			int
+			var
+			BS->Time->Year
+			prototype
+			int
+			var
+			BS->Time->Month
+		prototype
+		int
+		var
+		BS->Time->Day
+		prototype
+		int
+		var
+		BS->Time->Hour
+		prototype
+		int
+		var
+		BS->Time->Minute
+		prototype
+		int
+		var
+		BS->Time->Second
+}
+Vvar
+ustruct
+	PC_ST
+	Vvar
+section
+.STGetTime
+var
+PC_ST->BS->Time->Year
+=
+@ScratchVar("EFI_TIME_YEAR")
+var
+PC_ST->BS->Time->Month
+=
+@ScratchVar("EFI_TIME_MONTH")
+var
+PC_ST->BS->Time->Day
+=
+@ScratchVar("EFI_TIME_DAY")
+var
+PC_ST->BS->Time->Hour
+=
+@ScratchVar("EFI_TIME_HOUR")
+var
+PC_ST->BS->Time->Minute
+=
+@ScratchVar("EFI_TIME_MINUTE")
+var
+PC_ST->BS->Time->Second
+=
+@ScratchVar("EFI_TIME_SECOND")
+popback
+section
+.STGetInfo
+var
+PC_ST->Vendor
+=
+@ScratchVar("EFI_VENDOR")
+var
+PC_ST->Version
+=
+@ScratchVar("EFI_VERSION")
+popback
+section
+.STGetSystemTable
+jump
+.STGetInfo
+popback
 Rutime
 function
 Print
