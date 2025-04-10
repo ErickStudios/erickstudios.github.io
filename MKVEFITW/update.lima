@@ -80,8 +80,6 @@ if
 {
 	ECHO "SecureBoot is enable"
 }
-jump
-.EFI_MAIN
 @structure
 {
 	prototype
@@ -135,10 +133,10 @@ NULL
 		var
 		BS->Time->Second
 }
-Vvar
-ustruct
-	PC_ST
-	Vvar
+EFIV_ST
+;
+jump
+.AfterST_CONF
 section
 .STGetTime
 var
@@ -168,6 +166,18 @@ PC_ST->BS->Time->Second
 popback
 section
 .STGetInfo
+ustruct
+PC_ST
+EFIV_ST
+if
+(
+	PC_ST
+		==
+	NULL
+)
+{
+	__stop__
+}
 var
 PC_ST->Vendor
 =
@@ -179,9 +189,13 @@ PC_ST->Version
 popback
 section
 .STGetSystemTable
+popback
+section
+.AfterST_CONF
 jump
 .STGetInfo
-popback
+jump
+.EFI_MAIN
 Rutime
 function
 Print
