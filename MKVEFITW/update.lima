@@ -81,90 +81,7 @@ if
 	ECHO "SecureBoot is enable"
 }
 jump
- .SMBIOS_MAINc
-jump
 .EFI_MAIN
-var
-	@cpu_mode
-	=
-	0
-if
-(
-	"Waton"
-	!=
-	"Waton"
-)
-{
-	ECHO "Illegal coppy"
-	__stop__
-}
-typedef
-	var
-@cpu_mode
-=
-0x32
-	.x32
-typedef
-	var
-@cpu_mode
-=
- 0x64
-	.x64
-typedef
-	var
-@cpu_mode
-=
- 0x64
-	.x64
-var
-@cpu_mode
-=
-0x128
-var
-	Resources
-	=
-	0x00000000001
-section
-.COLGATE_SMBIOS
-jump
-.COLGATE_SMBIOS
-section
-.RESOURCE_ADD
-.x64
-var
-	ResourceToCreate
-	+=
-	ResourceName
-var
-	ResourceToCreate
-	+=
-	ResourcePath
-var
-	Resources
-	+=
-	ResourceToCreate
-if
-(
-	Resources
-		>
-	0xFFFFFFFFFFFF
-)
-{
-	jump
-	.COLGATE_SMBIOS
-}
-var
-@cpu_mode
-=
-0x128
-popback
-section
-.SMSBIOS_MAIN
-var
-	Resources
-	=
-	0x00000000000
-popback
 Rutime
 function
 Print
@@ -180,10 +97,7 @@ var
 	EFI_NT_EMULATOR
 	=
 	0
-var
-@cpu_mode
-=
-0x32
+.x32
 section
 .EFI_MAIN
 var
